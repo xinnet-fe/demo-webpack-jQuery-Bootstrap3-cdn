@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Webpack Demo</title>
-    <%= require('./components/head.ejs')() %>
-</head>
+<%= require('./components/head.ejs')() %>
 <body>
-  <%= require('./components/header.ejs')() %>
-    <img src="./images/zhPic04.jpg" alt="">
+  <%= require('./components/header/header.ejs')() %>
+    <img src="${require('./images/zhPic04.jpg')}" alt="">
     <div id="app">
         <div id="info"></div>
         <button type="button" class="btn btn-default" aria-label="Left Align">
@@ -52,5 +46,6 @@
 </div>
         <img src="https://www.w3cplus.com/sites/default/files/blogs/2019/1908/2FD3FF4F@3CB03877.1C8D5B5D.png" alt="">
     </div>
+    <%= require('./components/footer.ejs')() %>
 </body>
 </html>

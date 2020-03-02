@@ -8,16 +8,16 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 const utils = require('./utils')
 
-function resolve(dir) {
-    return path.join(__dirname, '..', dir)
-}
 module.exports = {
-    context: path.resolve(__dirname, '../'),
+    context: path.join(__dirname, '../'),
+    externals: {
+        jquery: 'jQuery'
+    },
     // 入口JS路径
     entry: utils.entryList(),
     resolve: {
         alias: {
-            '@': resolve('src'),
+            '@': path.join(__dirname, '../src'),
         }
     },
     plugins: [
@@ -26,7 +26,7 @@ module.exports = {
         // copy static 
         new CopyWebpackPlugin([
             {
-                from: resolve('src/static'),
+                from: path.join(__dirname, '../src/static'),
                 to: 'static'
             }
         ]),
@@ -42,8 +42,8 @@ module.exports = {
     ],
     // 编译输出路径
     output: {
-        // js生成到dist/js，[name]表示保留原js文件名
-        filename: 'js/[name].min.js',
+        // js生成到dist/static/js，[name]表示保留原js文件名
+        filename: 'static/js/[name].min.js',
         // 输出路径为dist
         path: config.build.assetsRoot,
         publicPath: process.env.NODE_ENV === 'production'
@@ -74,9 +74,9 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             // 最终生成的css代码中,图片url前缀
-                            // publicPath: '../images',
+                            // publicPath: 'static/images',
                             // 图片输出的实际路径(相对于dist)
-                            outputPath: 'static/images',
+                            outputPath: './static/images',
                             // 当小于某KB时转为base64
                             limit: 0,
                             esModule: false
@@ -138,10 +138,19 @@ module.exports = {
                 //     priority: 19,
                 //     reuseExistingChunk: true
                 // },
+                // 提取公共js文件
+                common_js: {
+                    test: /[\\/]commonjs[\\/].+\.js$/,
+                    name: 'commonjs',
+                    chunks: 'all',
+                    enforce: true,
+                    priority: 18,
+                    reuseExistingChunk: true
+                },
                 // 提取公共css文件
-                styles: {
+                common_css: {
                     test: /[\\/]common[\\/].+\.css$/,
-                    name: 'common',
+                    name: 'commoncss',
                     chunks: 'all',
                     enforce: true,
                     priority: 17,

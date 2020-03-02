@@ -7,9 +7,6 @@ const utils = require('./utils')
 
 const webpackConfig = merge(webpackcommon, {
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
-    externals: {
-        jquery: 'jQuery'
-    },
     output: {
         path: config.build.assetsRoot,
         filename: 'static/js/[name].[chunkhash].js'
