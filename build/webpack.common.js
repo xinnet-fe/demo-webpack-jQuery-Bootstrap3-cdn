@@ -140,8 +140,8 @@ module.exports = {
                 // },
                 // 提取公共js文件
                 common_js: {
-                    test: /[\\/]commonjs[\\/].+\.js$/,
-                    name: 'commonjs',
+                    test: /[\\/]global[\\/].+\.js$/,
+                    name: 'global',
                     chunks: 'all',
                     enforce: true,
                     priority: 18,
@@ -150,7 +150,7 @@ module.exports = {
                 // 提取公共css文件
                 common_css: {
                     test: /[\\/]common[\\/].+\.css$/,
-                    name: 'commoncss',
+                    name: 'styles',
                     chunks: 'all',
                     enforce: true,
                     priority: 17,
@@ -162,7 +162,10 @@ module.exports = {
         minimizer: [
             new UglifyJsPlugin({
                 uglifyOptions: {
-                    ie8: true
+                    ie8: true,
+                    compress: {
+                        drop_console: process.env.NODE_ENV === 'production' ? true : false
+                    }
                 }
             })
         ]

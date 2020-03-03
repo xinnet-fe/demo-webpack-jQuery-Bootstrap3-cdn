@@ -1,0 +1,2 @@
+XW_GLOBAL = {}
+XW_GLOBAL.FUN = {}

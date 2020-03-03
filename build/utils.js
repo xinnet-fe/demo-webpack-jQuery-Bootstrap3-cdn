@@ -20,7 +20,7 @@ function findFilePathAndName(startPath) {
 			let fPath = pathJoin(path, val);
 			let stats = fs.statSync(fPath);
 
-			if (stats.isDirectory() && val !== 'commonjs') {
+			if (stats.isDirectory() && val !== 'global') {
 				findNext(fPath)
 			}
 			if (stats.isFile() && fPath.indexOf(".js") > 0) {
@@ -56,7 +56,7 @@ exports.htmlPluginList = () => {
 			new HtmlWebpackPlugin({
 				filename: path.resolve(filesHtml.paths[i]).replace(/src/, 'dist').split(".")[0] + '.html',
 				template: path.resolve(filesHtml.paths[i]).replace(/\.js/, '.ejs'),
-				chunks: ['commoncss', 'commonjs', 'jquery', 'bootstrap', v],
+				chunks: ['styles', 'global', 'jquery', 'bootstrap', v],
 				inject: 'body', // js的script注入到body底部
 				//压缩配置
 				minify: {
